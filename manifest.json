@@ -2,17 +2,36 @@
   "manifest_version": 3,
   "name": "Tambut Running Pets",
   "version": "1.0.0",
-  "description": "A fun desktop pet goose that roams your screen",
+  "description": "A fun pet duck that roams across your web pages",
+  "permissions": ["storage"],
   "action": {
-    "default_popup": "index.html",
-    "default_title": "Tambut Pet"
+    "default_popup": "popup.html",
+    "default_title": "Tambut Pet",
+    "default_icon": "assets/icon.png"
   },
-  "permissions": [],
-  "icons": {},
+  "icons": {
+    "16": "assets/icon.png",
+    "48": "assets/icon.png",
+    "128": "assets/icon.png"
+  },
+  "background": {
+    "service_worker": "background.js"
+  },
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": ["content.js"],
+      "css": ["content.css"],
+      "run_at": "document_idle"
+    }
+  ],
   "web_accessible_resources": [
     {
       "resources": ["config.json"],
       "matches": ["<all_urls>"]
+    }
+  ]
+}
     }
   ]
 }

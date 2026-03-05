@@ -1,0 +1,34 @@
+#tambut-pet-container {
+  position: fixed !important;
+  top: 0 !important;
+  left: 0 !important;
+  width: 100vw !important;
+  height: 100vh !important;
+  pointer-events: none !important;
+  z-index: 2147483647 !important;
+  overflow: visible !important;
+  background: transparent !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  border: none !important;
+  transform: none !important;
+}
+
+#tambut-goose {
+  position: fixed;
+  font-size: 64px;
+  z-index: 2147483647;
+  pointer-events: none;
+  user-select: none;
+  line-height: 1;
+  filter: drop-shadow(2px 2px 2px rgba(0,0,0,0.3));
+}
+
+.tambut-footprint {
+  position: fixed;
+  font-size: 18px;
+  opacity: 0.4;
+  pointer-events: none;
+  user-select: none;
+  line-height: 1;
+}
