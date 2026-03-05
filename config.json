@@ -1,0 +1,6 @@
+{
+  "speed": 2,
+  "honkFrequency": 5000,
+  "footprintDuration": 3000,
+  "mouseDragChance": 0.1
+}
