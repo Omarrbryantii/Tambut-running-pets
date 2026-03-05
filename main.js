@@ -1,38 +1,64 @@
-const { app, BrowserWindow } = require('electron');
+const { app, BrowserWindow, Tray, Menu, globalShortcut, screen } = require('electron');
 const path = require('path');
 
 let mainWindow;
+let tray;
 
 function createWindow() {
+  const { width, height } = screen.getPrimaryDisplay().workAreaSize;
+
   mainWindow = new BrowserWindow({
-    width: 200,
-    height: 200,
+    width: width,
+    height: height,
+    x: 0,
+    y: 0,
     transparent: true,
     frame: false,
     alwaysOnTop: true,
-    skipTaskbar: true,
+    skipTaskbar: false,
+    resizable: false,
+    focusable: false,
     webPreferences: {
       nodeIntegration: true,
       contextIsolation: false,
     },
   });
 
-  mainWindow.loadFile('index.html');
+  // Allow clicks to pass through the transparent areas
+  mainWindow.setIgnoreMouseEvents(true, { forward: true });
 
-  // For debugging, uncomment:
-  // mainWindow.webContents.openDevTools();
+  mainWindow.loadFile('index.html');
 
   mainWindow.on('closed', () => {
     mainWindow = null;
   });
 }
 
-app.whenReady().then(createWindow);
+function createTray() {
+  // Use a simple icon — falls back to Electron default
+  tray = new Tray(path.join(__dirname, 'assets', 'icon.png'));
+  tray.setToolTip('Tambut Running Pet');
+  tray.setContextMenu(Menu.buildFromTemplate([
+    { label: 'Quit Tambut Pet', click: () => app.quit() },
+  ]));
+}
+
+app.whenReady().then(() => {
+  createWindow();
+  createTray();
+
+  // ESC to quit
+  globalShortcut.register('Escape', () => {
+    app.quit();
+  });
+});
+
+app.on('will-quit', () => {
+  globalShortcut.unregisterAll();
+});
 
 app.on('window-all-closed', () => {
-  if (process.platform !== 'darwin') {
-    app.quit();
-  }
+  app.quit();
 });
 
 app.on('activate', () => {
